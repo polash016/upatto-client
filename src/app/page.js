@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useScroll } from "framer-motion";
 import LoadingScreen from "@/components/LoadingScreen";
 import LoadingImages from "@/components/HomePage/LoadingImages";
 import ImageGallery from "@/components/HomePage/ImageGallery";
@@ -13,12 +13,13 @@ import HeroSectionTwo from "@/components/HeroTwo";
 import HeroSectionThree from "@/components/HeroThree";
 import HeroSectionLogo, { LampDemo } from "@/components/HeroFour";
 import banner from "../../public/upatto_banner.jpg";
-import AnimatedLogo from "@/components/shared/AnimatedLogo";
+import { SquareAnimation } from "@/components/shared/AnimatedLogo";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange((value) => {
@@ -88,11 +89,23 @@ export default function Home() {
           </div>
         </div>
       </ContainerScroll> */}
-      <AnimatedLogo />
+      {/* <AnimatedLogo /> */}
+      <AnimatePresence>
+        {!showNavbar && (
+          <motion.div
+            key="animation"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <SquareAnimation onAnimationComplete={() => setShowNavbar(true)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Content Section */}
       <section className="min-h-screen px-4">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : 50 }}
           className="max-w-3xl mx-auto text-center py-20"
@@ -101,7 +114,7 @@ export default function Home() {
             We are a team of experts dedicated for creating sustainable
             architecture that is in harmony with its surroundings.
           </p>
-        </motion.div>
+        </motion.div> */}
       </section>
       <section>
         {/* <LoadingImages images={sampleProjects} /> */}

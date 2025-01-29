@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       setShowNavbar(true);
     } else {
       // Delay navbar appearance after animation (adjust timing as needed)
-      const timer = setTimeout(() => setShowNavbar(true), 5000);
+      const timer = setTimeout(() => setShowNavbar(true), 9700);
       return () => clearTimeout(timer);
     }
   }, [isHomePage]);

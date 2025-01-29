@@ -5,20 +5,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import logo4 from "../../../public/logo005.png";
+import logo4 from "../../../public/upatto_logo.jpeg";
 
 export default function OgNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full top-0 left-0 p-4 flex justify-between items-center bg-white shadow-sm z-50">
+    <nav className="fixed w-full top-0 left-0 p-4 flex justify-between items-center bg-white dshadow-sm z-50">
       {/* Logo - Replace with your actual logo */}
       {/* <div className="w-12 h-12 bg-gray-200 rounded" /> */}
       <Image
         className="bg-transparent"
         src={logo4}
         alt="Logo"
-        width={150}
+        width={100}
         height={30}
       />
 
