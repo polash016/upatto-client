@@ -4,16 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import logo from "../../../public/upatto_logo.jpeg";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { Cover } from "../ui/cover";
 
-export default function NavBar() {
+export default function ProjectCategory({ isScrolled }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuItems = [
     { label: "HOME", to: "/", position: { top: "30%", left: "35%" } },
     {
       label: "PROJECTS",
-      to: "/projects-category",
+      to: "/projects",
       position: { top: "40%", left: "43%" },
     },
     { label: "MEDIA", to: "/media", position: { top: "48%", left: "72%" } },
@@ -22,32 +20,46 @@ export default function NavBar() {
 
   return (
     <>
-      <motion.nav className={cn(` w-full z-50 bg-white}`)}>
-        <div className="max-w-7xl mx-auto px-8 flex gap-4 items-center">
+      <motion.nav
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isScrolled ? 1 : 0 }}
+        className={`fixed w-full z-50 ${isScrolled ? "bg-white" : ""}`}
+      >
+        <div className="max-w-7xl mx-auto px-8 py-6 flex gap-4 items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <motion.div className="flex items-center">
-              <Cover>
-                <h1 className="px-8 text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 hover:from-pink-500 hover:to-yellow-500 transition-all duration-500">
-                  Upatto
-                </h1>
-              </Cover>
+            <motion.div
+              animate={{ opacity: isScrolled ? 1 : 0 }}
+              className="flex items-center"
+            >
+              {/* <span className="font-bold text-2xl">
+                <span className="text-orange-500">U</span>
+                <span>PATTO</span>
+              </span> */}
+              <Image height={100} width={100} alt="Logo" src={logo} />
             </motion.div>
           </Link>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="ml-auto flex flex-col space-y-1.5"
-          >
-            <div className="w-8 h-0.5 bg-gray-800" />
-            <div className="w-8 h-0.5 bg-gray-800" />
-            <div className="w-8 h-0.5 bg-gray-800" />
-          </button>
+          {isScrolled && (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="ml-auto flex flex-col space-y-1.5"
+            >
+              <div className="w-8 h-0.5 bg-gray-800" />
+              <div className="w-8 h-0.5 bg-gray-800" />
+              <div className="w-8 h-0.5 bg-gray-800" />
+            </button>
+          )}
         </div>
       </motion.nav>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div className="fixed inset-0 bg-white z-40 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-white z-40 flex items-center justify-center"
+          >
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-6 right-8 flex flex-col space-y-1.5"

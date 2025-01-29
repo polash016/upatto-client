@@ -6,6 +6,11 @@ import Navbar from "@/components/shared/NavBar";
 import { ScrollProvider } from "./context/ScrollContext";
 import Footer from "@/components/shared/Footer";
 import NavTwo from "@/components/shared/NavTwo";
+import { FloatingNavDemo } from "@/components/shared/NavThree";
+import { NavFour } from "@/components/shared/NavFour";
+import AnimationNav from "@/components/shared/AnimationNav";
+import { usePathname } from "next/navigation";
+import OgNavbar from "@/components/shared/OgNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,23 +28,31 @@ const geistMono = Geist_Mono({
 // };
 
 export default function RootLayout({ children }) {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const [showNavbar, setShowNavbar] = useState(false);
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (!isHomePage) {
+      setShowNavbar(true);
+    } else {
+      // Delay navbar appearance after animation (adjust timing as needed)
+      const timer = setTimeout(() => setShowNavbar(true), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isHomePage]);
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ScrollProvider>
-          {/* <Navbar isScrolled={isScrolled} /> */}
-          <NavTwo isScrolled={isScrolled} />
+          {/* <FloatingNavDemo /> */}
+          {/* <NavFour /> */}
+          {/* <Navbar /> */}
+          {/* <NavTwo isScrolled={isScrolled} /> */}
+          {/* <AnimationNav /> */}
+          {showNavbar && <OgNavbar />}
           {children}
           <Footer />
         </ScrollProvider>
