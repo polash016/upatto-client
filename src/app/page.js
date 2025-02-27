@@ -1,135 +1,121 @@
-"use client";
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
-import LoadingScreen from "@/components/LoadingScreen";
-import LoadingImages from "@/components/HomePage/LoadingImages";
-import ImageGallery from "@/components/HomePage/ImageGallery";
-import { GalleryDemo } from "@/components/HomePage/GalleryDemo";
-import { ContainerScroll } from "@/components/HomeEx";
-import HeroSection from "@/components/HomeExTwo";
-import Image from "next/image";
-import logo from "../../public/upatto_logo.jpeg";
-import HeroSectionTwo from "@/components/HeroTwo";
-import HeroSectionThree from "@/components/HeroThree";
-import HeroSectionLogo, { LampDemo } from "@/components/HeroFour";
-import banner from "../../public/upatto_banner.jpg";
-import { SquareAnimation } from "@/components/shared/AnimatedLogo";
+// "use client";
+// import { useState, useEffect } from "react";
+// import { motion, useScroll } from "framer-motion";
+// import { SquareAnimation } from "@/components/shared/AnimatedLogo";
+// import OgNavbar from "@/components/shared/OgNav";
+// import ProjectsCard from "@/components/HomePage/ProjectsCard";
+// import AnimatedProjects from "@/components/HomePage/AnimatedProjects";
+
+// export default function Home() {
+//   const { scrollY } = useScroll();
+//   const [showNavbar, setShowNavbar] = useState(false);
+
+//   useEffect(() => {
+//     let timeoutId = null;
+//     const handleScroll = (value) => {
+//       // Using 25px because your progress maps [0,50] -> [0,1]
+//       if (value > 25) {
+//         if (timeoutId) clearTimeout(timeoutId);
+//         // Wait 1.5s (the same as the container's topLeft transition)
+//         timeoutId = setTimeout(() => {
+//           setShowNavbar(true);
+//         }, 1500);
+//       } else {
+//         setShowNavbar(false);
+//         if (timeoutId) clearTimeout(timeoutId);
+//       }
+//     };
+
+//     const unsubscribe = scrollY.onChange(handleScroll);
+
+//     return () => {
+//       unsubscribe();
+//       if (timeoutId) clearTimeout(timeoutId);
+//     };
+//   }, [scrollY]);
+
+//   return (
+//     <main className="min-h-screen bg-white">
+//       <SquareAnimation onAnimationComplete={() => {}} />
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: showNavbar ? 1 : 0 }}
+//         transition={{ duration: 0.5 }}
+//       >
+//         <OgNavbar />
+//       </motion.div>
+
+//       {/* Content Section */}
+//       <section className="min-h-screen px-4"></section>
+//       <section>
+//         <ProjectsCard />
+//         {/* <AnimatedProjects /> */}
+//       </section>
+//     </main>
+//   );
+// }
+
+
+"use client"
+
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { SquareAnimation } from "@/components/shared/AnimatedLogo"
+import ProjectsCard from "@/components/HomePage/ProjectsCard"
+import OgNavbar from "@/components/shared/OgNav"
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { scrollY } = useScroll();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showNavbar, setShowNavbar] = useState(false);
+  const [showContent, setShowContent] = useState(false)
+  const [showNavbar, setShowNavbar] = useState(false)
 
-  useEffect(() => {
-    const unsubscribe = scrollY.onChange((value) => {
-      setIsScrolled(value > 50);
-    });
-    return () => unsubscribe();
-  }, [scrollY]);
+  const handleAnimationComplete = (completed) => {
+    if (completed) {
+      setShowContent(true)
+      setTimeout(() => setShowNavbar(true), 0) // Delay navbar appearance
+    }
+  }
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* {isLoading && <LoadingScreen setIsLoading={setIsLoading} />} */}
-
-      {/* <section className="h-screen relative flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5 }}
-          className="relative"
-        >
-          <motion.div
-            className="flex items-center"
-            animate={
-              isScrolled
-                ? {
-                    x: "-40vw",
-                    y: "-45vh",
-                    scale: 0.6,
-                  }
-                : {
-                    x: 0,
-                    y: 0,
-                    scale: 1,
-                  }
-            }
-            transition={{ duration: 0.5 }}
-          >
-            <div className="relative">
-              <div className="text-6xl font-bold">
-                <Image alt="Logo" src={logo} />
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section> */}
-
-      {/* <HeroSectionTwo /> */}
-      {/* <HeroSectionThree /> */}
-      {/* <HeroSectionLogo /> */}
-
-      {/* <ContainerScroll>
-        <div className="relative h-full w-full">
-          <Image
-            src={banner}
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-2xl"
-          />
-
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white p-4">
-            <h1 className="text-5xl md:text-6xl font-bold text-center mb-4">
-              Welcome to Upatto
-            </h1>
-            <p className="text-lg md:text-xl text-center max-w-2xl">
-              A team of experts dedicated for creating sustainable architecture
-            </p>
-          </div>
-        </div>
-      </ContainerScroll> */}
-      {/* <AnimatedLogo /> */}
+    <main className="min-h-screen bg-white overflow-hidden flex flex-col">
       <AnimatePresence>
-        {!showNavbar && (
+        {!showContent && (
           <motion.div
-            key="animation"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            // key="banner"
+            // initial={{ opacity: 1 }}
+            // exit={{ opacity: 0, y: "-100vh" }}
+            // transition={{ duration: 1 }}
+            className="fixed inset-0 z-50 bg-white"
           >
-            <SquareAnimation onAnimationComplete={() => setShowNavbar(true)} />
+            <SquareAnimation onAnimationComplete={handleAnimationComplete} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Content Section */}
-      <section className="min-h-screen px-4">
-        {/* <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : 50 }}
-          className="max-w-3xl mx-auto text-center py-20"
-        >
-          <p className="text-xl text-gray-400 italic">
-            We are a team of experts dedicated for creating sustainable
-            architecture that is in harmony with its surroundings.
-          </p>
-        </motion.div> */}
-      </section>
-      <section>
-        {/* <LoadingImages images={sampleProjects} /> */}
-        {/* <ImageGallery /> */}
-        <GalleryDemo />
-      </section>
-    </main>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showNavbar ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+        className="sticky top-0 z-40"
+      >
+        <OgNavbar show={showNavbar} />
+      </motion.div>
 
-    // <>
-    //   <ContainerScroll
-    //     titleComponent={
-    //       <div className="text-4xl font-bold text-center mb-8">Upatto</div>
-    //     }
-    //   />
-    //   {/* <HeroSection /> */}
-    // </>
-  );
+      <AnimatePresence>
+        {showContent && (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex-grow"
+          >
+            <ProjectsCard />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
+    </main>
+  )
 }
+

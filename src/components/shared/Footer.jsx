@@ -42,7 +42,10 @@ const Footer = () => {
               <span>info@upattobd.com</span>
             </span>
           </div>
-          <p className="mt-4 text-gray-500">All Rights Reserved, © Upatto</p>
+          <div className="flex gap-4 justify-center items-center">
+ <p className="mt-4 text-gray-500">All Rights Reserved, © Upatto</p>
+ <p className="mt-4 text-gray-400">Website designed by, © <a href="https://blankspacer.com/">Blankspacer</a></p>
+          </div>
         </div>
       </div>
     </footer>

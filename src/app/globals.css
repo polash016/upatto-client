@@ -166,3 +166,7 @@
     height: 100%;
   }
 }
+
+.transform-origin-center {
+  transform-origin: center;
+}

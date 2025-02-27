@@ -2,13 +2,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { useEffect, useState } from "react";
-import Navbar from "@/components/shared/NavBar";
 import { ScrollProvider } from "./context/ScrollContext";
 import Footer from "@/components/shared/Footer";
-import NavTwo from "@/components/shared/NavTwo";
-import { FloatingNavDemo } from "@/components/shared/NavThree";
-import { NavFour } from "@/components/shared/NavFour";
-import AnimationNav from "@/components/shared/AnimationNav";
 import { usePathname } from "next/navigation";
 import OgNavbar from "@/components/shared/OgNav";
 
@@ -37,7 +32,7 @@ export default function RootLayout({ children }) {
       setShowNavbar(true);
     } else {
       // Delay navbar appearance after animation (adjust timing as needed)
-      const timer = setTimeout(() => setShowNavbar(true), 9700);
+      const timer = setTimeout(() => setShowNavbar(true), 12600);
       return () => clearTimeout(timer);
     }
   }, [isHomePage]);
@@ -52,7 +47,7 @@ export default function RootLayout({ children }) {
           {/* <Navbar /> */}
           {/* <NavTwo isScrolled={isScrolled} /> */}
           {/* <AnimationNav /> */}
-          {showNavbar && <OgNavbar />}
+          {/* {showNavbar && <OgNavbar />} */}
           {children}
           <Footer />
         </ScrollProvider>
